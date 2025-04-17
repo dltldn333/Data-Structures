@@ -116,12 +116,18 @@ int main()
 
 void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
-	/* add your code here */
+	ListNode* cur_node = ll->head;
+	while (cur_node != NULL)
+	{
+		enqueue(q, cur_node->item);
+		cur_node = cur_node -> next;
+	}
+	
 }
 
 void removeOddValues(Queue *q)
 {
-	/* add your code here */
+	printf("삭제기능은 없습니다.");
 }
 
 //////////////////////////////////////////////////////////////////////////////////

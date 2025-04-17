@@ -13,13 +13,20 @@ Purpose: Implementing the required functions for Question 1 */
 
 typedef struct _listnode{
 	int item;
+	// ListNode라는 타입의 넥스트 라는 포이터 변수 선언.
+	// 다음에 올 노드의 값 => next자체는 그 값의 주소
+	// 그렇다면 주소를 받아야 함. 주소를 받지 않으면 오류
+	// * 때문에 next가 주소를 받아야 하기 때문
 	struct _listnode *next;
-} ListNode;			// You should not change the definition of ListNode
+} ListNode;
 
+// 그렇다면 연결리스트 구조체는?
+	// 
 typedef struct _linkedlist{
 	int size;
+	// ListNode라는 타입()의 헤드라는 포인터 변수 선언 
 	ListNode *head;
-} LinkedList;			// You should not change the definition of LinkedList
+} LinkedList;
 
 
 ///////////////////////// function prototypes ////////////////////////////////////
@@ -38,6 +45,7 @@ int removeNode(LinkedList *ll, int index);
 
 int main()
 {
+	// ll 이라는 연결리스트 하나 선언
 	LinkedList ll;
 	int c, i, j;
 	c = 1;
@@ -61,6 +69,8 @@ int main()
 		case 1:
 			printf("Input an integer that you want to add to the linked list: ");
 			scanf("%d", &i);
+			// j는 insertSortedLL에 링크드리스트와 i
+				// 
 			j = insertSortedLL(&ll, i);
 			printf("The resulting linked list is: ");
 			printList(&ll);
@@ -71,7 +81,7 @@ int main()
 		case 3:
 			printf("The resulting sorted linked list is: ");
 			printList(&ll);
-			removeAllItems(&ll);
+			// removeAllItems(&ll);
 			break;
 		case 0:
 			removeAllItems(&ll);
@@ -88,10 +98,103 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 삽입 정렬 연결 리스트를 구현하는 함수
+
+// 파라미터
+	// 위에서 링크드 리스트를 하나 ll로 선언함.
+	// 그렇다면 우리가 만든 함수의 파라미터는 *ll
+	// *ll은 ll이 할당 받는 링크드 리스트의 주소 값의 실제 값
+	// ll은 주소
+	// item 은 유저가 입력한 숫자
 int insertSortedLL(LinkedList *ll, int item)
 {
-	/* add your code here */
+	// next도 주소를 받아야 하고
+	// head도 주소를 받아야 함
+
+	// 필요 없는 거 아닌가?
+	// 이미 위에서 선언 후 넣어 줬잖아..
+	// NULL일 이유가 없잖아.
+	if(ll == NULL) return -1;
+	
+	// 변수 호출 시 새로운 노드 하나 생성
+	// 노드의 값은 입력받은 수
+	// 다음 노드는 일단 NULL로 초기화
+	//ListNode 타입을 가진 new_node라는 포인터 변수 선언
+	ListNode* new_node = malloc(sizeof(ListNode));
+	// (*new_node).item = item;
+	new_node->item = item;
+	new_node->next = NULL;	
+
+	// 만약 연결리스트가 비었다면?
+	if(ll->size == 0){
+		// 해드에 만든 노드를 연결 후 노드의 사이즈 키우기
+		ll->head = new_node;
+		ll->size++;
+		return 0;
+	}
+	else{
+		// 노드가 존재한다면
+
+		int idx = 0;
+		ListNode* cur_node = ll->head;
+		ListNode* prev_node = NULL;
+		while(cur_node != NULL && cur_node->item < item){
+			prev_node = cur_node;
+			idx++;
+			cur_node = cur_node->next;
+		}
+		// printf("%i",idx);
+		if(cur_node == NULL){
+			if(prev_node->item == item){
+				// printf("%i\n", cur_node->next->item);
+				printf("same value\n");
+				free(new_node);
+				return -1;
+				
+			}
+			prev_node->next = new_node;
+			ll->size++;
+			return idx;
+		}
+		else{
+			if(prev_node == NULL){			// 맨앞
+				if(cur_node->item == item){
+					// printf("%i\n", cur_node->next->item);
+					printf("same value\n");
+					free(new_node);
+					return -1;
+					
+				}
+				new_node->next = cur_node;
+				ll->head = new_node;
+				ll->size++;
+				return 0;
+			}
+			else{
+				if(prev_node->item == item){
+					// printf("%i\n", cur_node->next->item);
+					printf("same value\n");
+					free(new_node);
+					return -1;
+				}
+				if(cur_node->item == item){
+					// printf("%i\n", cur_node->next->item);
+					printf("same value\n");
+					free(new_node);
+					return -1;
+				}
+				prev_node->next = new_node;
+				new_node->next = cur_node;
+				ll->size++;
+				return idx;
+			}
+		}
+
+	}
+	
 }
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 

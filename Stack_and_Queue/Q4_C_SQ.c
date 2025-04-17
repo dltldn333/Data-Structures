@@ -55,7 +55,6 @@ ListNode * findNode(LinkedList *ll, int index);
 int insertNode(LinkedList *ll, int index, int value);
 int removeNode(LinkedList *ll, int index);
 void removeAllItems(LinkedList *ll);
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -112,7 +111,20 @@ int main()
 
 void reverse(Queue *q)
 {
-/* add your code here */
+	ListNode* cur = q->ll.head;
+	Stack *s = malloc(sizeof(Stack));
+
+	while (!isEmptyQueue(q))
+	{
+		// printf("%d",dequeue(q));
+		push(s, dequeue(q));
+	}
+
+	while (!isEmptyStack(s))
+	{
+		enqueue(q, pop(s));
+	}
+	free(s);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

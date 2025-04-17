@@ -1,5 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////////////////////////
 /* CE1007/CZ1007 Data Structures
 Lab Test: Section A - Linked List Questions
 Purpose: Implementing the required functions for Question 2 */
@@ -103,7 +103,40 @@ int main()
 
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-    /* add your code here */
+	if (ll1 == NULL || ll2 == NULL || ll1 -> size == 0 || ll2 -> size == 0) return;
+
+	
+	ListNode* ll1_cur_node = ll1 -> head;
+	ListNode* ll2_cur_node = ll2 -> head;
+	ListNode* ll1_next_node;
+	ListNode* ll2_next_node;
+	
+	// 헤드와 연결된 노드가 있는 동안
+	while (ll1_cur_node != NULL && ll2_cur_node != NULL)
+	{
+		ll1_next_node = ll1_cur_node->next;
+		ll2_next_node = ll2_cur_node->next;
+
+		ll1_cur_node->next = ll2_cur_node;
+		ll2_cur_node->next = ll1_next_node;
+
+		ll1_cur_node = ll1_next_node;
+		ll2_cur_node = ll2_next_node;
+	}
+	
+	ll2 -> head = ll2_cur_node;
+
+	
+	// while ()
+	// {
+	// 	/* code */
+	// }
+	
+	
+
+
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

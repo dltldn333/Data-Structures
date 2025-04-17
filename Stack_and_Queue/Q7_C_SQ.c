@@ -104,7 +104,53 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+	Stack *s = malloc(sizeof(Stack));
+	while (*expression != '\0') {
+		if (*expression == '[' || *expression == '{' || *expression == '(')
+		{
+			push(s, *expression);
+		} else
+		{
+			if (isEmptyStack(s))
+			{
+				return 1;
+			}
+			
+			switch (*expression)
+			{
+			case '}':
+				if (peek(s) == '{')
+				{
+					pop(s);
+				}
+				else{
+					return 1;
+				}
+			case ']':
+				if (peek(s) == '[')
+				{
+					pop(s);
+				}
+				else{
+					return 1;
+				}
+			case ')':
+				if (peek(s) == '(')
+				{
+					pop(s);
+				}
+				else{
+					return 1;
+				}
+			default:
+				return 1;
+			}
+		}
+		expression++;
+	}
+	if (isEmptyStack(s)) return 0;
+	return 1;
+	
 }
 
 ////////////////////////////////////////////////////////////
@@ -113,6 +159,7 @@ void removeAllItemsFromStack(Stack *s)
 {
 	if (s == NULL)
 		return;
+		
 	while (s->ll.head != NULL)
 	{
 		pop(s);

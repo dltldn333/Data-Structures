@@ -8,6 +8,7 @@ Purpose: Implementing the required functions for Question 3 */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -86,7 +87,63 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	// ListNode* cur_node = ll->head;
+	// ListNode* tail_node;
+	// ListNode* next_node;
+	// bool isTailFirst = false;
+	// while (cur_node != NULL)
+	// {
+	// 	next_node = cur_node->next;
+	// 	if (next_node->item%2 == 1)
+	// 	{
+	// 		if (!isTailFirst)
+	// 		{
+	// 			tail_node = next_node;
+	// 			isTailFirst = true;
+	// 		}
+	// 		tail_node -> next = next_node;
+	// 		cur_node -> next = cur_node->next->next;
+	// 	}
+		
+	// 	cur_node = next_node;
+	// }
+	
+	// cur_node->next = tail_node;
+
+	if (ll->head == NULL || ll->head-> next == NULL) return;
+	ListNode* tail_node = ll -> head;
+	int len = 1;
+
+	while (tail_node -> next != NULL){
+		tail_node = tail_node->next;
+		len++;
+	}
+
+	ListNode* prev_node = NULL;
+	ListNode* cur_node = ll->head;
+	ListNode* original_tail_node = tail_node;
+
+	for (int i = 0; i < len; i++)
+	{
+		ListNode* next_node = cur_node->next;
+
+		if (cur_node-> item % 2 == 1){
+			if (prev_node == NULL)
+			{
+				ll->head = next_node;
+			}else {
+				prev_node->next = next_node;
+			}
+			
+			cur_node->next = NULL;
+			tail_node->next = cur_node;
+			tail_node = cur_node;
+		} else {
+			prev_node = cur_node;
+		}
+		cur_node = next_node;
+	}
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

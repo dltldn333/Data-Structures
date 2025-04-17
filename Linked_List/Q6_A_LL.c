@@ -88,7 +88,59 @@ int main()
 
 int moveMaxToFront(ListNode **ptrHead)
 {
-    /* add your code here */
+	ListNode*cur_node = *ptrHead;
+	ListNode*prev_node = NULL;
+	ListNode*big_node = cur_node;
+	ListNode*big_prev_node = prev_node;
+	// 현재노드 다음에 노드가 있는 동안
+	while (cur_node->next != NULL)
+	{
+		if (big_node ->item < cur_node ->item)
+		{	
+			big_node = cur_node;
+			big_prev_node = prev_node;
+		}	
+		// 여기서 부턴 나음 노드의 상황이 됨
+		// 현재 노드를 이전 노드로 취급
+		prev_node = cur_node;
+		// 현재 노드를 다음노드로 전진
+		cur_node = cur_node->next;
+	}
+	if (big_prev_node != NULL)
+	{
+		big_prev_node -> next = big_node->next;
+		big_node->next = *ptrHead;
+		*ptrHead = big_node;
+	}
+	// ListNode*cur_node = *ptrHead;
+	// ListNode*prev_node = NULL;
+	// ListNode*big_node;
+	// ListNode*big_prev_node;
+	// // 현재노드 다음에 노드가 있는 동안
+	// while (cur_node->next != NULL)
+	// {
+	// 	if (prev_node == NULL)
+	// 	{
+	// 		big_prev_node = NULL;
+	// 		big_node = cur_node;
+	// 	}
+	// 	if (prev_node !=NULL && prev_node ->item < cur_node ->item)
+	// 	{	
+	// 		big_prev_node = prev_node;
+	// 		big_node = cur_node;
+	// 	}	
+	// 	// 여기서 부턴 나음 노드의 상황이 됨
+	// 	// 현재 노드를 이전 노드로 취급
+	// 	prev_node = cur_node;
+	// 	// 현재 노드를 다음노드로 전진
+	// 	cur_node = cur_node->next;
+	// }
+	// 	if (big_prev_node != NULL)
+	// 	{
+	// 		big_prev_node -> next = big_node->next;
+	// 		big_node->next = *ptrHead;
+	// 		*ptrHead = big_node;
+	// 	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////
